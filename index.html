@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>주니 마커 다운로드</title>
+<link rel="icon" href="favicon.ico">
+<style>
+  /* 앱과 같은 「소프트」 디자인: 은회색 바탕, 떠 있는 흰 판, 먹색 포인트, 주황은 로고에만 */
+  :root {
+    --bg: #EEF0F3; --card: #FFFFFF; --text: #0B0C0F; --muted: #5B6070; --line: #E4E6EB;
+    --accent: #0B0C0F; --accent-soft: #F2F3F6; --accent-text: #FFFFFF; --code: #F2F3F6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0B0C0F; --card: #16181D; --text: #ECEEF2; --muted: #A3A9B5; --line: #2A2E37;
+            --accent: #FFFFFF; --accent-soft: #23262E; --accent-text: #0B0C0F; --code: #0B0C0F; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 16px/1.65 "Pretendard", "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 40px 16px 64px; }
+  .logo { display: block; width: 64px; height: 64px; }
+  .logo svg { width: 30px; height: 30px; }
+  h1 { font-size: 32px; line-height: 1.25; margin: 20px 0 6px; letter-spacing: -0.02em; }
+  .lead { color: var(--muted); margin: 0 0 24px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 26px; margin: 0 0 16px;
+          box-shadow: 0 8px 30px rgba(11, 12, 15, 0.05); }
+  .dl { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: var(--accent-text);
+        font-weight: 700; font-size: 18px; text-decoration: none; padding: 14px 26px; border-radius: 999px;
+        transition: transform .2s cubic-bezier(0.32, 0.72, 0, 1), opacity .2s; }
+  .dl:active { transform: scale(0.98); }
+  .dl:hover { filter: brightness(1.08); }
+  .dl:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .meta { color: var(--muted); font-size: 14px; margin-top: 12px; }
+  h2 { font-size: 18px; margin: 0 0 12px; }
+  ol, ul { margin: 0; padding-left: 22px; } li { margin: 6px 0; }
+  code, .hash { font-family: Consolas, "Courier New", monospace; background: var(--code); border: 1px solid var(--line);
+                border-radius: 6px; padding: 1px 6px; font-size: 14px; word-break: break-all; }
+  .hash { display: block; padding: 10px 12px; margin-top: 8px; }
+  kbd { font-family: inherit; background: var(--accent-soft); border: 1px solid var(--line); border-radius: 6px; padding: 0 7px; font-size: 14px; }
+  .note { color: var(--muted); font-size: 14px; }
+  footer { color: var(--muted); font-size: 13px; margin-top: 24px; }
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" src="data:image/png;base64,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" width="64" height="64" alt="주니 마커 로고">
+  <h1>주니 마커</h1>
+  <p class="lead">화면을 캡처하고 번호·도형·화살표·형광펜·글자를 넣어 바로 복사하거나 저장하는 Windows 프로그램입니다.</p>
+
+  <section class="card" aria-labelledby="dl-h">
+    <h2 id="dl-h">다운로드</h2>
+    <a class="dl" href="https://github.com/specialjun12-commits/juni-marker/releases/download/v1.7/JuniMarker_v1.7_Setup.zip" download>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
+      Windows용 내려받기
+    </a>
+    <div class="meta">버전 1.7 · 2026-11-19 · 약 30MB · Windows 10/11 64비트 · 파이썬·인터넷 연결 필요 없음</div>
+  </section>
+
+  <section class="card" aria-labelledby="how-h">
+    <h2 id="how-h">설치 (1분)</h2>
+    <ol>
+      <li>받은 zip 파일을 우클릭 → <b>모두 압축 풀기</b></li>
+      <li>풀린 폴더의 <code>install.bat</code> 더블클릭 (로그인 때 자동 시작 여부를 물어봅니다)</li>
+      <li>바탕화면의 <b>주니 마커 캡처</b>를 더블클릭하거나 <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>J</kbd>를 누르세요</li>
+    </ol>
+    <p class="note">지울 때는 같은 폴더의 <code>uninstall.bat</code>을 실행하세요.</p>
+  </section>
+
+  <section class="card" aria-labelledby="use-h">
+    <h2 id="use-h">사용</h2>
+    <ul>
+      <li><kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>A</kbd>로 캡처 시작 → 영역 드래그 → 번호·사각형·동그라미·화살표·형광펜·글자</li>
+      <li>글씨체와 굵게 선택, 넣은 글자는 끌어서 이동 · 번호 크기 선택과 나중에 변경</li>
+      <li><kbd>Ctrl</kbd> <kbd>C</kbd> 복사 / <kbd>Ctrl</kbd> <kbd>S</kbd> 저장(저장하면 자동으로 종료) / <kbd>Esc</kbd> 취소</li>
+    </ul>
+  </section>
+
+  <section class="card" aria-labelledby="chk-h">
+    <h2 id="chk-h">파일 확인 (선택)</h2>
+    <p class="note" style="margin:0">내려받은 파일이 온전한지 확인하려면 명령 프롬프트에서 <code>certutil -hashfile JuniMarker_v1.7_Setup.zip SHA256</code> 를 실행해 아래 값과 비교하세요.</p>
+    <span class="hash">7d9381bc15ea605f3c21ac6d49c6d4ec68ac54e0b81c72ae183f3a3d32e3a524</span>
+  </section>
+
+  <footer>
+    이 프로그램은 인터넷에 연결하지 않으며, 캡처 이미지는 복사·저장하기 전까지 메모리에서만 처리합니다.
+    코드 서명이 없는 개인 제작 프로그램입니다. zip 파일에 경고가 뜨면 파일 속성에서 "차단 해제"를 체크한 뒤 풀어 주세요.
+  </footer>
+</main>
+</body>
+</html>
